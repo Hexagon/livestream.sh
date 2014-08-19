@@ -1,7 +1,7 @@
 livestream.sh
 =============
 
-Bash-helper for gstreamer live video streaming with minimal latency, currently only working with Raspberry PI Camera. Configuration, client and server is contained withing a single file.
+Bash-helper for gstreamer live video streaming with minimal latency, currently only working with Raspberry PI Camera. Configuration, client and server is contained within a single file.
 
 
 Installation
