@@ -15,7 +15,7 @@ PORT=5000
 INTERFACE="wlan0"
 RESX=640
 RESY=480
-BITRATE=2000000
+BITRATE=1000000
 LOGFILE="/tmp/livestream.log"
 PIDFILE="/tmp/livestream.pid"
 
