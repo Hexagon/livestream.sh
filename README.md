@@ -27,6 +27,10 @@ Install the package
 
 To use the built-in client, you need gstreamer 1.0 there as well, refer to your own distributions user forums (or google).
 
+Download the file, one way is to use wget like below
+
+```wget http://raw.githubusercontent.com/Hexagon/livestream.sh/master/livestream.sh```
+
 Before launching, you have to allow livestream.sh to execute, using
 
 ```chmod +x livestream.sh```
