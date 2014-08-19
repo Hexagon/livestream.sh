@@ -83,7 +83,7 @@ then
 		then
 			echo "Starting client"
 			echo ""
-			gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=1 pt=96 ! gdppay ! tcpserversink host=$HOSTIP port=$HOSTPORT
+			gst-launch-1.0 -v tcpclientsrc host=$HOSTIP port=$HOSTPORT  ! gdpdepay !  rtph264depay ! avdec_h264 ! videoconvert ! autovideosink sync=false
 		else
 			echo "Status: Host IP or port invalid, please try again or check out ./livestream.sh help."
 		fi
