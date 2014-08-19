@@ -74,7 +74,7 @@ then
 
 	fi
 else
-	echo "This is a tool to help ypu stream live video from something to something, using gstreamer 1.0."
+	echo "Bash-helper for gstreamer 1.0 live video streaming"
 	echo ""
 	echo "Usage:"
 	echo "	./livestream.sh [start|stop|help]"
