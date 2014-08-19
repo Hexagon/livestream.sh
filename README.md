@@ -1,7 +1,7 @@
 livestream.sh
 =============
 
-Bash-helper for gstreamer live video streaming, currently only working with Raspberry PI Camera.
+Bash-helper for gstreamer live video streaming, currently only working with Raspberry PI Camera. Configuration, client and server is contained withing a single file.
 
 
 Installation
