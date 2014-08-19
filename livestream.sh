@@ -73,12 +73,32 @@ then
 		exit 1
 
 	fi
+elif [ "$1" = "client" ]
+then
+        HOSTIP=$(echo "$2" | cut -d ':' -f 1 -s)
+	HOSTPORT=$(echo "$2" | cut -d ':' -f 2 -s)
+	if [ -n "$HOSTIP" ]
+	then
+		if [ -n "$HOSTPORT" ]
+		then
+			echo "Starting client"
+			echo ""
+			gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=1 pt=96 ! gdppay ! tcpserversink host=$HOSTIP port=$HOSTPORT
+		else
+			echo "Status: Host IP or port invalid, please try again or check out ./livestream.sh help."
+		fi
+	else
+		echo "Status: Host IP or port invalid, please try again or check out ./livestream.sh help."
+	fi
 else
 	echo "Bash-helper for gstreamer 1.0 live video streaming"
 	echo ""
-	echo "Usage:"
-	echo "	./livestream.sh [start|stop|help]"
-	echo ""
+        echo "Usage as server:"
+        echo "  ./livestream.sh [start|stop|help]"
+        echo ""
+        echo "Usage as client:"
+        echo "  ./livestream.sh client hostip:hostport"
+        echo ""
 	echo "To report a bug, request a feature etc., visit <http://github.com/Hexagon/livestream.sh>"
 fi
 
