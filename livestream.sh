@@ -79,7 +79,7 @@ else
 	echo "Usage:"
 	echo "	./livestream.sh [start|stop|help]"
 	echo ""
-	echo "To report a bug, request a feature etc., visit < >"
+	echo "To report a bug, request a feature etc., visit <http://github.com/Hexagon/livestream.sh>"
 fi
 
 # Assume success
