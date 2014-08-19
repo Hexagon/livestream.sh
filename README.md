@@ -31,7 +31,9 @@ To use the built-in client, you need gstreamer 1.0 there as well, refer to your 
 Usage
 =============
 as server:
-  ./livestream.sh [start|stop|help]
+
+```   ./livestream.sh [start|stop|help]```
 
 as client:
-  ./livestream.sh client hostip:hostport
+
+```   ./livestream.sh client hostip:hostport```
