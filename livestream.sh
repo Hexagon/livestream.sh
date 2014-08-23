@@ -11,8 +11,9 @@
 
 
 # - CONFIGURATION -------------------------------------
+MULTICAST_GROUP=224.1.1.1
 PORT=5000
-INTERFACE="wlan0"
+INTERFACE="eth0"
 RESX=640
 RESY=480
 BITRATE=1000000
@@ -35,14 +36,17 @@ then
 		exit 1
 
 	else
+		# 
+		if [ -n "$2" ]
+		then
+			INTERFACE="$2"
+		fi
 		# Everything is good, spawn new process
-		IP=$(ifconfig | grep -A1 $INTERFACE | grep Bcast | tr -s " " | cut -d " "   -f 3 | cut -d ":" -f 2)
-
-		echo "Launching gstreamer on 	$IP:$PORT"
+		echo "Launching gstreamer multicast on $INTERFACE"
 		echo ""
 		echo "Redirecting output to: 	$LOGFILE"
 		echo "Pidfile:		$PIDFILE"
-		nohup </dev/null raspivid -t 0 -h $RESY -w $RESX -fps 25 -hf -b $BITRATE -o 2>/dev/null - | gst-launch-1.0 -v fdsrc ! h264parse !  rtph264pay config-interval=1 pt=96 ! gdppay ! tcpserversink host=$IP port=$PORT >$LOGFILE 2>&1 &
+		nohup </dev/null raspivid -t 0 -h $RESY -w $RESX -fps 25 -hf -b $BITRATE -o 2>/dev/null - | gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=1 pt=96 ! udpsink host=$MULTICAST_GROUP auto-multicast=true multicast-iface=$INTERFACE port=$PORT >$LOGFILE 2>&1 &
 		PID=$!
 		echo $PID > $PIDFILE
 		echo ""
@@ -75,15 +79,13 @@ then
 	fi
 elif [ "$1" = "client" ]
 then
-        HOSTIP=$(echo "$2" | cut -d ':' -f 1 -s)
-	HOSTPORT=$(echo "$2" | cut -d ':' -f 2 -s)
 	if [ -n "$HOSTIP" ]
 	then
 		if [ -n "$HOSTPORT" ]
 		then
 			echo "Starting client"
 			echo ""
-			gst-launch-1.0 -v tcpclientsrc host=$HOSTIP port=$HOSTPORT  ! gdpdepay !  rtph264depay ! avdec_h264 ! videoconvert ! autovideosink sync=false
+			gst-launch-1.0 udpsrc multicast-group=$MULTICAST_GROUP port=$PORT caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, payload=(int)96" ! rtph264depay !  decodebin ! autovideosink
 		else
 			echo "Status: Host IP or port invalid, please try again or check out ./livestream.sh help."
 		fi
@@ -94,10 +96,10 @@ else
 	echo "Bash-helper for gstreamer 1.0 live video streaming"
 	echo ""
         echo "Usage as server:"
-        echo "  ./livestream.sh [start|stop|help]"
+        echo "  ./livestream.sh [start|stop|help] <interface>"
         echo ""
         echo "Usage as client:"
-        echo "  ./livestream.sh client hostip:hostport"
+        echo "  ./livestream.sh client"
         echo ""
 	echo "To report a bug, request a feature etc., visit <http://github.com/Hexagon/livestream.sh>"
 fi

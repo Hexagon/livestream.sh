@@ -3,6 +3,8 @@ livestream.sh
 
 Bash-helper for gstreamer live video streaming, currently only working with Raspberry PI Camera. Configuration, client and server is contained withing a single file.
 
+Streaming is done over multicast groups, so there is no need to worry about IP-addresses and stuff. It should just work.
+
 
 Installation
 =============
@@ -52,8 +54,8 @@ Usage
 =============
 as server:
 
-```   ./livestream.sh [start|stop|help]```
+```   ./livestream.sh [start|stop|help] <interface>```
 
 as client:
 
-```   ./livestream.sh client hostip:hostport```
+```   ./livestream.sh client```
