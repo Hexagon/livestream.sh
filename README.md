@@ -1,7 +1,7 @@
 livestream.sh
 =============
 
-Bash-helper for gstreamer live video streaming, currently only working with Raspberry PI Camera. Configuration, client and server is contained withing a single file.
+Bash-helper for gstreamer live video streaming with minimal latency, currently only working with Raspberry PI Camera. Configuration, client and server is contained within a single file.
 
 Streaming is done over multicast groups, so there is no need to worry about IP-addresses and stuff. It should just work.
 
@@ -9,7 +9,7 @@ Streaming is done over multicast groups, so there is no need to worry about IP-a
 Installation
 =============
 
-GStreamer is a prerequisite, and is installed on Raspberry pi (raspbian) with the following commands
+GStreamer is a prerequisite, and is installed on Raspberry PI (raspbian) with the following commands
 
 Edit sources.list
 
@@ -27,7 +27,7 @@ Install the package
 
 ```sudo apt-get install gstreamer1.0```
 
-To use the built-in client, you need gstreamer 1.0 there as well, refer to your own distributions user forums (or google).
+To use the built-in client, you need gstreamer 1.0 on the client machine as well. For instructions on that, refer to the user forums of your distributions (or google).
 
 Download the file, one way is to use wget like below
 
