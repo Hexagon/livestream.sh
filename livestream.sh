@@ -79,19 +79,9 @@ then
 	fi
 elif [ "$1" = "client" ]
 then
-	if [ -n "$HOSTIP" ]
-	then
-		if [ -n "$HOSTPORT" ]
-		then
-			echo "Starting client"
-			echo ""
-			gst-launch-1.0 udpsrc multicast-group=$MULTICAST_GROUP port=$PORT caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, payload=(int)96" ! rtph264depay !  decodebin ! autovideosink
-		else
-			echo "Status: Host IP or port invalid, please try again or check out ./livestream.sh help."
-		fi
-	else
-		echo "Status: Host IP or port invalid, please try again or check out ./livestream.sh help."
-	fi
+	echo "Starting client"
+	echo ""
+	gst-launch-1.0 udpsrc multicast-group=$MULTICAST_GROUP port=$PORT caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, payload=(int)96" ! rtph264depay !  decodebin ! autovideosink
 else
 	echo "Bash-helper for gstreamer 1.0 live video streaming"
 	echo ""

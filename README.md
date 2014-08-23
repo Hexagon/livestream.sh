@@ -31,23 +31,11 @@ To use the built-in client, you need gstreamer 1.0 on the client machine as well
 
 Download the file, one way is to use wget like below
 
-```wget http://raw.githubusercontent.com/Hexagon/livestream.sh/master/livestream.sh```
+```wget https://raw.githubusercontent.com/Hexagon/livestream.sh/master/livestream.sh```
 
 Before launching, you have to allow livestream.sh to execute, using
 
 ```chmod +x livestream.sh```
-
-
-
-Configuration
-=============
-
-The configuration is self-contained withing the script, use your favorite text editor to customize.
-
-```nano livestream.sh```
-
-Please note that INTERFACE has to be set to the interface you'll be hosting the camera on. Usually eth0 for cable, or wlan0 for wireless.
-
 
 
 Usage
