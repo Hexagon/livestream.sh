@@ -13,6 +13,7 @@
 # - CONFIGURATION -------------------------------------
 MULTICAST_GROUP=224.1.1.1
 PORT=5000
+USE_RPICAMSRC=false	# This is a gstreamer plugin available at https://github.com/thaytan/gst-rpicamsrc
 INTERFACE="eth0"
 RESX=640
 RESY=480
@@ -46,7 +47,12 @@ then
 		echo ""
 		echo "Redirecting output to: 	$LOGFILE"
 		echo "Pidfile:		$PIDFILE"
-		nohup </dev/null raspivid -t 0 -h $RESY -w $RESX -fps 25 -hf -b $BITRATE -o 2>/dev/null - | gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=1 pt=96 ! udpsink host=$MULTICAST_GROUP auto-multicast=true multicast-iface=$INTERFACE port=$PORT >$LOGFILE 2>&1 &
+		if $USE_RPICAMSRC;
+		then
+			nohup </dev/null gst-launch-1.0 rpicamsrc bitrate=$BITRATE ! video/x-h264,width=$RESX,height=$RESY,framerate=25/1 !  h264parse ! rtph264pay config-interval=1 pt=96 ! udpsink host=$MULTICAST_GROUP auto-multicast=true multicast-iface=$INTERFACE port=$PORT >$LOGFILE 2>&1 &
+		else
+			nohup </dev/null raspivid -t 0 -h $RESY -w $RESX -fps 25 -hf -b $BITRATE -o 2>/dev/null - | gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=1 pt=96 ! udpsink host=$MULTICAST_GROUP auto-multicast=true multicast-iface=$INTERFACE port=$PORT >$LOGFILE 2>&1 &
+		fi
 		PID=$!
 		echo $PID > $PIDFILE
 		echo ""

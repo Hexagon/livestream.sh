@@ -5,6 +5,8 @@ Bash-helper for gstreamer live video streaming with minimal latency, currently o
 
 Streaming is done over multicast groups, so there is no need to worry about IP-addresses and stuff. It should just work.
 
+Gstreamer rpicamsrc (https://github.com/thaytan/gst-rpicamsrc) is supported but disabled by default. If you have it installed, you can enable it by changing a flag in livestream.sh.
+
 
 Installation
 =============
