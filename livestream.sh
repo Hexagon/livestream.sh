@@ -27,11 +27,11 @@ echo "livestream.sh, Hexagon <hexagon@GitHub> 2014"
 echo ""
 
 # Read pid (if exist)
-PID=$(cat $PIDFILE)
+PID=$(cat $PIDFILE 2>/dev/null)
 if [ "$1" = "start" ]
 then
 	# Check status of running process
-	if ps -p $PID > /dev/null
+	if ps -p $PID > /dev/null 2>&1
 	then
 		echo "Status: already running with pid $PID, refusing to spawning another process."
 		exit 1
@@ -63,12 +63,12 @@ then
 elif [ "$1" = "stop" ]
 then
 	# Check status of running process
-	if ps -p $PID > /dev/null
+	if ps -p $PID > /dev/null 2>&1
 	then
 		echo "Stopping livestream.sh..."
 		while true
 		do
-			if ps -p $PID > /dev/null
+			if ps -p $PID > /dev/null 2>&1
 			then
 				kill $PID
 				wait $PID > /dev/null 2>&1
